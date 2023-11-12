@@ -12,18 +12,23 @@ C:\kafka_2.12-3.6.0\bin\windows\kafka-server-start.bat  C:\kafka_2.12-3.6.0\conf
 
 # KAFKA-APP
 cd .\kafka-app\
+python -m venv venv
 venv\Scripts\activate
+pip install -r requirements.txt
 python producer.py
 venv\Scripts\deactivate
 cd ..
 
 # FLASK-APP
 cd .\flask-app\
+python -m venv venv
 venv\Scripts\activate
+pip install -r requirements.txt
 python app.py
 venv\Scripts\deactivate
 cd ..
 
 # REACT-APP
 cd .\react-app\
+npm install
 npm start

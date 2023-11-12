@@ -14,7 +14,7 @@ last_positions = {}
 
 def get_train_positions():
 
-    response = requests.get("https://fgc.opendatasoft.com/api/explore/v2.1/catalog/datasets/posicionament-dels-trens/records?select=id%2C%20geo_point_2d&limit=60")
+    response = requests.get("https://fgc.opendatasoft.com/api/explore/v2.1/catalog/datasets/posicionament-dels-trens/records?select=id%2C%20geo_point_2d%2C%20lin&limit=60")
 
     if response.status_code != 200:
 
@@ -23,7 +23,7 @@ def get_train_positions():
     response_data = response.json()
     results = response_data.get('results')
 
-    return [(r.get('id'), r.get('geo_point_2d').get('lon'), r.get('geo_point_2d').get('lat')) for r in results]
+    return [(r.get('id'), r.get('geo_point_2d').get('lon'), r.get('geo_point_2d').get('lat'), r.get('lin')) for r in results]
 
 def positions_have_changed(id, lon, lat):
 
@@ -47,7 +47,7 @@ def produce_messages():
 
     for result in api_results:
 
-        train_id, lon, lat = result
+        train_id, lon, lat, lin = result
 
         if positions_have_changed(train_id, lon, lat):
 
@@ -57,6 +57,7 @@ def produce_messages():
                 'id': train_id,
                 'lon': lon,
                 'lat': lat,
+                'route_id': lin,
                 'timestamp': timestamp
             }
 

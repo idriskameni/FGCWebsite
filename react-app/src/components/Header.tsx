@@ -1,6 +1,13 @@
 import React from 'react';
 
-const Header: React.FC = () => {
+interface HeaderProps {	
+  lastUpdateTime: Date | null;
+}
+
+const Header: React.FC<HeaderProps> = ({ lastUpdateTime }) => {
+
+  const formattedTime = lastUpdateTime ? lastUpdateTime.toLocaleTimeString() : 'Not yet updated';
+
   return (
     <>
         <div className='app-header'>
@@ -8,6 +15,9 @@ const Header: React.FC = () => {
                 <header>
                     <h1>FGC Website</h1>
                 </header>
+            </div>
+            <div className='app-header__last-update'>
+              <h3>Última actualització: {formattedTime}</h3>
             </div>
         </div>
     </>

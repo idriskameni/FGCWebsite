@@ -2,6 +2,7 @@ export interface PositionsData {
     id: string;
     lat: number;
     lon: number;
+    route_id: string;
     timestamp: string;
 }
 

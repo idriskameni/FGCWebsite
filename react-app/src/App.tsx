@@ -1,23 +1,28 @@
 // src/App.tsx
 import React, { useState, useEffect } from 'react';
 import Map from './components/Map';
-import StatusCard from './components/StatusCard';
+// import StatusCard from './components/StatusCard';
 import './App.css'; // Assuming you have your styling here
 import { PositionsData, LinesData } from './types';
 import { Header, LineSelector, SideBar } from './components';	// Import the Header component
 import { SelectChangeEvent } from '@mui/material';
+import SelectedLinesLegendCard from './components/SelectedLinesLegendCard';
 
 const App: React.FC = () => {
   const [railwayData, setRailwayData] = useState<LinesData[]>([]);
   const [positions, setPositions] = useState<PositionsData[]>([]);
   const [lineName, setLineName] = React.useState<string[]>([]);
+  const [lastUpdateTime, setLastUpdateTime] = useState<Date | null>(null);
 
   useEffect(() => {
     // Set up a timer to fetch the data every 5 seconds
     const interval = setInterval(() => {
       fetch('http://127.0.0.1:5000/latest-positions')
         .then((response) => response.json())
-        .then((data) => setPositions(data))
+        .then((data) => {
+          setPositions(data);
+          setLastUpdateTime(new Date());
+        })
         .catch((error) => console.error('Error fetching data:', error));
     }, 5000);
 
@@ -53,13 +58,18 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header lastUpdateTime={lastUpdateTime}/>
       <div className="app-container">
-        <SideBar />
+        {/* <SideBar /> */}
         <div className="app-map-container">
-          <Map positions={positions} railwayData={railwayData} />
+          <div className='map-container'>
+            <Map positions={positions} railwayData={railwayData} lineNames={lineName} />
+          </div>
           <div className="line-selector-container">
             <LineSelector handleChange={handleChange} lineName={lineName} railwayData={railwayData} />
+          </div>
+          <div className="selected-lines-legend-container">
+            <SelectedLinesLegendCard railwayData={railwayData} lineNames={lineName} />
           </div>
         </div>
         {/* <StatusCard positions={positions} /> */}

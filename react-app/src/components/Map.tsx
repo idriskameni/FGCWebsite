@@ -9,6 +9,7 @@ import { PositionsData, LinesData } from '../types';
 interface MapProps {
   positions: PositionsData[];
   railwayData: LinesData[];
+  lineNames: string[];
 }
 
 const trainMarkerIcon = L.icon({
@@ -18,21 +19,22 @@ const trainMarkerIcon = L.icon({
   popupAnchor: [0, -25], // Point from which the popup should open relative to the iconAnchor
 });
 
-const Map: React.FC<MapProps> = ({ positions, railwayData }) => {
+const Map: React.FC<MapProps> = ({ positions, railwayData, lineNames }) => {
 
-  // Log the data here
-  railwayData?.forEach((line, index) => {
-    console.log(line, index);
-  });
+  // Filter railway lines based on selected route IDs
+  const filteredRailwayData = railwayData.filter(line => lineNames.includes(line.route_id));
+
+  // Filter positions based on selected route IDs
+  const filteredPositions = positions.filter(position => lineNames.includes(position.route_id));
   
   return (
     <MapContainer center={[41.3879, 2.16992]} zoom={13} style={{ height: '100%', width: '100%' }}>
       <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
       />
 
-      {railwayData?.map((line, index) => (
+      {filteredRailwayData?.map((line, index) => (
         console.log(line, index),
         <Polyline
           key={index}
@@ -41,7 +43,7 @@ const Map: React.FC<MapProps> = ({ positions, railwayData }) => {
         />
       ))}
 
-      {positions?.map((position) => (
+      {filteredPositions?.map((position) => (
         <Marker 
           key={position.id} 
           position={[position.lat, position.lon]} 
