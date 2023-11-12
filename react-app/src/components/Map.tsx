@@ -1,13 +1,14 @@
 // src/components/Map.tsx
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import trainIcon from '../assets/images/train-icon.png'; // Make sure this path is correct
-import { Position } from '../types';
+import { PositionsData, LinesData } from '../types';
 
 interface MapProps {
-  positions: Position[];
+  positions: PositionsData[];
+  railwayData: LinesData[];
 }
 
 const trainMarkerIcon = L.icon({
@@ -17,14 +18,30 @@ const trainMarkerIcon = L.icon({
   popupAnchor: [0, -25], // Point from which the popup should open relative to the iconAnchor
 });
 
-const Map: React.FC<MapProps> = ({ positions }) => {
+const Map: React.FC<MapProps> = ({ positions, railwayData }) => {
+
+  // Log the data here
+  railwayData?.forEach((line, index) => {
+    console.log(line, index);
+  });
+  
   return (
-    <MapContainer center={[41.3879, 2.16992]} zoom={13} style={{ height: '100vh', width: '100%' }}>
+    <MapContainer center={[41.3879, 2.16992]} zoom={13} style={{ height: '100%', width: '100%' }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {positions.map((position) => (
+
+      {railwayData?.map((line, index) => (
+        console.log(line, index),
+        <Polyline
+          key={index}
+          positions={line.coordinates.map(coord => [coord[1], coord[0]])}
+          color={`#${line.route_color}`}
+        />
+      ))}
+
+      {positions?.map((position) => (
         <Marker 
           key={position.id} 
           position={[position.lat, position.lon]} 
@@ -37,6 +54,7 @@ const Map: React.FC<MapProps> = ({ positions }) => {
       ))}
     </MapContainer>
   );
+
 };
 
 export default Map;

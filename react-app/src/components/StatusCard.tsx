@@ -1,8 +1,8 @@
 import React from 'react';
-import { Position } from '../types';
+import { PositionsData } from '../types';
 
 interface StatusCardProps {
-  positions: Position[];
+  positions: PositionsData[];
 }
 
 const StatusCard: React.FC<StatusCardProps> = ({ positions }) => {

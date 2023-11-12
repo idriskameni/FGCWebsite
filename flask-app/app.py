@@ -3,6 +3,8 @@ from flask_cors import CORS
 from kafka import KafkaConsumer
 from threading import Thread, Lock
 import json
+import requests
+import ast
 
 app = Flask(__name__)
 CORS(app)
@@ -54,6 +56,24 @@ def get_latest_positions():
         
     # Return a list of all latest positions outside of the lock
     return jsonify(latest_positions_copy)
+
+
+@app.route('/railway-lines', methods=['GET'])
+def get_railway_data():
+    url = "https://dadesobertes.fgc.cat/api/explore/v2.1/catalog/datasets/gtfs_routes/records?limit=60"
+    response = requests.get(url)
+    data = response.json()  # Assuming the data is in JSON format
+    result = []
+    for element in data.get('results'):
+        json_element = ast.literal_eval(str(element))
+        result_element = {
+            'route_id': json_element.get('route_id'),
+            'route_color': json_element.get('route_color'),
+            'coordinates': json_element.get('shape').get('geometry').get('coordinates')[0]
+        }
+        result.append(result_element)
+    
+    return jsonify(result)
 
 
 if __name__ == '__main__':
