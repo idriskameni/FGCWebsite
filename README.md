@@ -10,8 +10,17 @@ C:\kafka_2.12-3.6.0\bin\windows\kafka-server-start.bat  C:\kafka_2.12-3.6.0\conf
 
 .\bin\windows\kafka-topics.bat --create --topic train-positions --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
 
-# KAFKA-APP
-cd .\kafka-app\
+# DATA-PRODUCER-APP
+cd .\data-producer-app\
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+python main.py
+venv\Scripts\deactivate
+cd ..
+
+# DATA-PERSISTENCE-APP
+cd .\data-persistence-app\
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt

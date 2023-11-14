@@ -23,7 +23,7 @@ def consume_kafka_messages():
         bootstrap_servers=['localhost:9092'],
         auto_offset_reset='earliest',
         enable_auto_commit=True,
-        group_id='my-group',
+        group_id='web-backend-group',
         value_deserializer=lambda m: json.loads(m.decode('ascii'))
     )
 
@@ -60,7 +60,7 @@ def get_latest_positions():
 
 @app.route('/railway-lines', methods=['GET'])
 def get_railway_data():
-    url = "https://dadesobertes.fgc.cat/api/explore/v2.1/catalog/datasets/gtfs_routes/records?limit=60"
+    url = "https://dadesobertes.fgc.cat/api/explore/v2.1/catalog/datasets/gtfs_routes/records?limit=100"
     response = requests.get(url)
     data = response.json()  # Assuming the data is in JSON format
     result = []
