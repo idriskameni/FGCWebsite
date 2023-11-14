@@ -1,26 +1,28 @@
-flask-app/venv
-kafka-app/venv
+data-persistence-app/venv
+data-producer-app/venv
+predictions-app/venv
+web-backend/venv
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-react-app/node_modules
-react-app/.pnp
-react-app/.pnp.js
+web-frontend/node_modules
+web-frontend/.pnp
+web-frontend/.pnp.js
 
 # testing
-react-app/coverage
+web-frontend/coverage
 
 # production
-react-app/build
+web-frontend/build
 
 # misc
-react-app/.DS_Store
-react-app/.env.local
-react-app/.env.development.local
-react-app/.env.test.local
-react-app/.env.production.local
+web-frontend/.DS_Store
+web-frontend/.env.local
+web-frontend/.env.development.local
+web-frontend/.env.test.local
+web-frontend/.env.production.local
 
-react-app/npm-debug.log*
-react-app/yarn-debug.log*
-react-app/yarn-error.log*
+web-frontend/npm-debug.log*
+web-frontend/yarn-debug.log*
+web-frontend/yarn-error.log*

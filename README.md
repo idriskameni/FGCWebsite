@@ -15,7 +15,7 @@ cd .\kafka-app\
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
-python producer.py
+python main.py
 venv\Scripts\deactivate
 cd ..
 
@@ -24,7 +24,7 @@ cd .\flask-app\
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
-python app.py
+python main.py
 venv\Scripts\deactivate
 cd ..
 
