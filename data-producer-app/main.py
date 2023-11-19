@@ -16,7 +16,8 @@ last_positions = {}
 
 def get_train_positions():
 
-    response = requests.get("https://fgc.opendatasoft.com/api/explore/v2.1/catalog/datasets/posicionament-dels-trens/records?limit=100")
+    url = "https://fgc.opendatasoft.com/api/explore/v2.1/catalog/datasets/posicionament-dels-trens/records?limit=100"
+    response = requests.get(url)
 
     if response.status_code != 200:
 

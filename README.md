@@ -41,3 +41,9 @@ cd ..
 cd .\react-app\
 npm install
 npm start
+
+# CLEAN ZOOKEEPER/KAFKA
+https://stackoverflow.com/questions/51644409/kafka-broker-fails-because-all-log-dirs-have-failed
+
+rmdir /s /q C:\tmp\kafka-logs
+rmdir /s /q C:\tmp\zookeeper
