@@ -1,0 +1,6 @@
+pandas
+psycopg2
+scikit-learn
+numpy
+keras
+tensorflow

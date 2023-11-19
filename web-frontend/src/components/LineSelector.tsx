@@ -11,12 +11,11 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import { LinesData, PositionsData } from '../types';
+import { LatestPositionsEntry } from '../types';
 
 interface LineSelectorProps {	
   lineNames: string[];
-  railwayData: LinesData[];
-  positionsData: PositionsData[];
+  latestPositions: LatestPositionsEntry[];
 }
 
 const ITEM_HEIGHT = 48;
@@ -30,7 +29,7 @@ const MenuProps = {
   },
 };
 
-const LineSelector: React.FC<LineSelectorProps> = ({ lineNames, railwayData, positionsData }) => {
+const LineSelector: React.FC<LineSelectorProps> = ({ lineNames, latestPositions }) => {
 
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState<string[]>(['']);

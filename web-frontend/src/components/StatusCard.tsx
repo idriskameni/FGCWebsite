@@ -1,14 +1,14 @@
 import React from 'react';
-import { PositionsData } from '../types';
+import { LatestPositionsEntry } from '../types';
 
 interface StatusCardProps {
-  positions: PositionsData[];
+  latestPositions: LatestPositionsEntry[];
 }
 
-const StatusCard: React.FC<StatusCardProps> = ({ positions }) => {
+const StatusCard: React.FC<StatusCardProps> = ({ latestPositions }) => {
   return (
     <div className="status-card">
-      {positions.map((position) => (
+      {latestPositions.map((position) => (
         <div key={position.id} className="status-item">
           <p>Train ID: {position.id}</p>
           <p>Last Updated: {position.timestamp}</p>

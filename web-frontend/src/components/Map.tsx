@@ -1,15 +1,15 @@
 // src/components/Map.tsx
-import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
+import React from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import trainIcon from '../assets/images/train-icon.png'; // Make sure this path is correct
-import { PositionsData, LinesData } from '../types';
+import { LatestPositionsEntry, RailwayLinesEntry } from '../types';
+import MapLine from './MapLine';
 
 interface MapProps {
-  positions: PositionsData[];
-  railwayData: LinesData[];
-  lineNames: string[];
+  latestPositions: LatestPositionsEntry[];
+  railwayLines: RailwayLinesEntry[];
 }
 
 const trainMarkerIcon = L.icon({
@@ -19,10 +19,7 @@ const trainMarkerIcon = L.icon({
   popupAnchor: [0, -25], // Point from which the popup should open relative to the iconAnchor
 });
 
-const Map: React.FC<MapProps> = ({ positions, railwayData, lineNames }) => {
-
-  // Filter railway lines based on selected route IDs
-  const filteredRailwayData = railwayData.filter(line => lineNames.includes(line.route_id));
+const Map: React.FC<MapProps> = ({ latestPositions, railwayLines }) => {
   
   return (
     <MapContainer center={[41.3879, 2.16992]} zoom={13} style={{ height: '100%', width: '100%' }}>
@@ -31,18 +28,18 @@ const Map: React.FC<MapProps> = ({ positions, railwayData, lineNames }) => {
         attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
       />
 
-      {filteredRailwayData?.map((line, index) => (
-        <Polyline
-          key={index}
-          positions={line.coordinates.map(coord => [coord[1], coord[0]])}
-          color={`#${line.route_color}`}
-        />
+      {/* Render railway lines */}
+      {railwayLines?.map((railwayLine) => (
+        <MapLine key={railwayLine.route_id} railwayLine={railwayLine} />
       ))}
 
-      {positions?.map((position) => (
+      {/* Render train markers */}
+      {
+      /**
+      {latestPositions?.map((position) => (
         <Marker 
           key={position.id} 
-          position={[position.lat, position.lon]} 
+          position={[position.geo_point_2d.lat, position.geo_point_2d.lon]} 
           icon={trainMarkerIcon}
         >
           <Popup>
@@ -50,6 +47,8 @@ const Map: React.FC<MapProps> = ({ positions, railwayData, lineNames }) => {
           </Popup>
         </Marker>
       ))}
+      */
+      }
     </MapContainer>
   );
 

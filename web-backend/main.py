@@ -31,13 +31,14 @@ def consume_kafka_messages():
 
         record = message.value
         train_id = record['id']
-        timestamp = record['timestamp']
+        timestamp = message.timestamp
 
         # Acquire the lock before updating the dictionary
         with records_lock:
             # If this is the latest record for this ID, update the latest_records dictionary
             if train_id not in latest_records or timestamp > latest_records[train_id]['timestamp']:
                 latest_records[train_id] = record
+                latest_records[train_id]['timestamp'] = timestamp
 
 
 # Run the Kafka consumer in a separate thread
@@ -75,6 +76,23 @@ def get_railway_data():
     
     return jsonify(result)
 
+
+@app.route('/railway-line-stops', methods=['GET'])
+def get_railway_stops_data():
+    url = "https://dadesobertes.fgc.cat/api/explore/v2.1/catalog/datasets/gtfs_stops/records?limit=150"
+    response = requests.get(url)
+    data = response.json()  # Assuming the data is in JSON format
+    result = []
+    for element in data.get('results'):
+        json_element = ast.literal_eval(str(element))
+        result_element = {
+            'route_id': json_element.get('route_id'),
+            'route_color': json_element.get('route_color'),
+            'coordinates': json_element.get('shape').get('geometry').get('coordinates')[0]
+        }
+        result.append(result_element)
+    
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)

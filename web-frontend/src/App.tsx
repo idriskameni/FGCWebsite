@@ -1,16 +1,13 @@
 // src/App.tsx
 import React, { useState, useEffect } from 'react';
 import Map from './components/Map';
-// import StatusCard from './components/StatusCard';
-import './App.css'; // Assuming you have your styling here
-import { PositionsData, LinesData } from './types';
-import { Header, LineSelector, SideBar } from './components';	// Import the Header component
-import { SelectChangeEvent } from '@mui/material';
+import './App.css';
+import { LatestPositionsEntry, RailwayLinesEntry } from './types';
+import { Header } from './components';
 
 const App: React.FC = () => {
-  const [railwayData, setRailwayData] = useState<LinesData[]>([]);
-  const [positions, setPositions] = useState<PositionsData[]>([]);
-  const [lineNames, setLineNames] = useState<string[]>([]);
+  const [railwayLines, setRailwayLines] = useState<RailwayLinesEntry[]>([]);
+  const [latestPositions, setLatestPositions] = useState<LatestPositionsEntry[]>([]);
   const [lastUpdateTime, setLastUpdateTime] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -19,10 +16,7 @@ const App: React.FC = () => {
       try {
         const response = await fetch('http://127.0.0.1:5000/railway-lines');
         const data = await response.json();
-        setRailwayData(data);
-
-        const lineNames = data.map((line: LinesData) => line.route_id);
-        setLineNames(lineNames);
+        setRailwayLines(data);
       } catch (error) {
         console.error('Error fetching railway data:', error);
       }
@@ -38,7 +32,7 @@ const App: React.FC = () => {
       fetch('http://127.0.0.1:5000/latest-positions')
         .then((response) => response.json())
         .then((data) => {
-          setPositions(data);
+          setLatestPositions(data);
           setLastUpdateTime(new Date());
         })
         .catch((error) => console.error('Error fetching data:', error));
@@ -56,18 +50,19 @@ const App: React.FC = () => {
         <div className="app-map-container">
           <div className='map-container'>
             <Map 
-              positions={positions} 
-              railwayData={railwayData} 
-              lineNames={lineNames} 
+              latestPositions={latestPositions} 
+              railwayLines={railwayLines}
             />
           </div>
+          { /**
           <div className="line-selector-container">
             <LineSelector
               lineNames={lineNames}
               railwayData={railwayData}
-              positionsData={positions}
+              latestPositions={positions}
             />
-          </div>
+          </div> 
+          */ }
         </div>
         {/* <StatusCard positions={positions} /> */}
       </div>
