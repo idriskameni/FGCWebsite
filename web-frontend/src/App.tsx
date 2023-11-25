@@ -2,37 +2,23 @@
 import React, { useState, useEffect } from 'react';
 import Map from './components/Map';
 import './App.css';
-import { LatestPositionsEntry, RailwayLinesEntry } from './types';
-import { Header } from './components';
+import { PositionsEntry, RouteEntry } from './types';
+import { Header, Footer } from './components';
 
 const App: React.FC = () => {
-  const [railwayLines, setRailwayLines] = useState<RailwayLinesEntry[]>([]);
-  const [latestPositions, setLatestPositions] = useState<LatestPositionsEntry[]>([]);
+
+  const [positions, setPositions] = useState<PositionsEntry[]>([]);
   const [lastUpdateTime, setLastUpdateTime] = useState<Date | null>(null);
-
-  useEffect(() => {
-    // Define the function to fetch data
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:5000/railway-lines');
-        const data = await response.json();
-        setRailwayLines(data);
-      } catch (error) {
-        console.error('Error fetching railway data:', error);
-      }
-    };
-
-    // Call the function
-    fetchData();
-  }, []);
+  const [routes, setRoutes] = useState<RouteEntry[]>([]);
+  const [selectedRoutes, setSelectedRoutes] = React.useState<string[]>([]);
 
   useEffect(() => {
     // Set up a timer to fetch the data every 5 seconds
     const interval = setInterval(() => {
-      fetch('http://127.0.0.1:5000/latest-positions')
+      fetch('http://127.0.0.1:5000/positions')
         .then((response) => response.json())
         .then((data) => {
-          setLatestPositions(data);
+          setPositions(data);
           setLastUpdateTime(new Date());
         })
         .catch((error) => console.error('Error fetching data:', error));
@@ -40,32 +26,38 @@ const App: React.FC = () => {
 
     // Don't forget to clear the interval when the component is unmounted
     return () => clearInterval(interval);
+  }, []);    
+  
+  useEffect(() => {
+        fetch('http://127.0.0.1:5000/routes')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setRoutes(data);
+            })
+            .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
   return (
     <>
       <Header lastUpdateTime={lastUpdateTime}/>
-      <div className="app-container">
-        {/* <SideBar /> */}
+      <div className="app-main-container">
         <div className="app-map-container">
           <div className='map-container'>
             <Map 
-              latestPositions={latestPositions} 
-              railwayLines={railwayLines}
+              positions={positions}
+              routes={routes}
+              selectedRoutes={selectedRoutes}
+              setSelectedRoutes={setSelectedRoutes} 
             />
           </div>
-          { /**
-          <div className="line-selector-container">
-            <LineSelector
-              lineNames={lineNames}
-              railwayData={railwayData}
-              latestPositions={positions}
-            />
-          </div> 
-          */ }
         </div>
-        {/* <StatusCard positions={positions} /> */}
       </div>
+      <Footer />
     </>
   );
 };

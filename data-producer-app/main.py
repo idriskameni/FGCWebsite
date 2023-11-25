@@ -1,8 +1,10 @@
 from kafka import KafkaProducer
 import json
 import time
+import browser_cookie3
 import requests
 from datetime import datetime
+
 
 # Create Kafka producer
 producer = KafkaProducer(
@@ -14,9 +16,9 @@ producer = KafkaProducer(
 last_positions = {}
 
 
-def get_train_positions():
+def get_train_positions(cookies):
     url = "https://fgc.opendatasoft.com/api/explore/v2.1/catalog/datasets/posicionament-dels-trens/records?limit=100"
-    response = requests.get(url)
+    response = requests.get(url, cookies=cookies)
 
     if response.status_code != 200:
         return []
@@ -27,9 +29,9 @@ def get_train_positions():
         return results
 
 
-def produce_messages():
+def produce_messages(cookies):
 
-    response = get_train_positions()
+    response = get_train_positions(cookies)
 
     i = 0
 
@@ -43,6 +45,9 @@ def produce_messages():
     print(f'{i} messages sent to Kafka topic')
     print('-------------------------------------------------')
 
+
+cookies = browser_cookie3.edge(domain_name='.opendatasoft.com')
+
 while True:
-    produce_messages()
-    time.sleep(5)  # Send a message every 5 seconds
+    produce_messages(cookies)
+    time.sleep(15)  # Send a message every 5 seconds

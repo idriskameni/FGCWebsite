@@ -1,28 +1,23 @@
 import React from 'react';
 import { Polyline } from 'react-leaflet';
-import { RailwayLinesEntry } from '../types';
-import polyline from '@mapbox/polyline';
+import { LatLngTuple } from 'leaflet';
 
-interface MapLinesProps {
-    railwayLine: RailwayLinesEntry;
+
+interface MapLineProps {
+    coordinates: number[][];
+    color: string;
 }
 
-const MapLine: React.FC<MapLinesProps> = ({ railwayLine }) => {
+const MapLine: React.FC<MapLineProps> = ({ coordinates, color }) => {
 
-    const decodedPositions = polyline.decode(railwayLine.shape).map((point: [number, number]) => {
-        return { lat: point[0], lng: point[1] };
-    });
+    const polylineCoordinates: LatLngTuple[] = coordinates.map(([lon, lat]) => [lat, lon] as LatLngTuple);
 
     return (
         <>
-                <Polyline
-                    key={railwayLine.route_id}
-                    positions={PolyUtil.decode(railwayLine.shape)}
-                    color={`#${railwayLine.route_color}`}
-                />
+            <Polyline positions={polylineCoordinates} pathOptions={{ color: `#${color}`}} />
         </>
     );
-    
+
 }
 
 export default MapLine;

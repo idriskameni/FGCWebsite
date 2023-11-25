@@ -1,10 +1,10 @@
 -----
 
-# REACT-APP
+# WEB-FRONTEND
 
 -----
 
-cd .\react-app\
+cd .\web-frontend\
 npm install
 npm start
 

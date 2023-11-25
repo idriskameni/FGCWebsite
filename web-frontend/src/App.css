@@ -26,46 +26,36 @@
   padding-right: 20px; /* Adds some padding to the right */
 }
 
-.status-card {
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 1000;
-  width: 20vh; /* Adjust the width as needed */
-  height: 100vh;
-  overflow-y: auto;
-  background-color: white;
-  box-shadow: -2px 0 5px rgba(0,0,0,0.2);
-  padding: 20px;
-}
-
-.status-item {
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border-radius: 5px;
-}
-
-.app-container {
+.app-footer {
+  background-color: #282c34;
+  height: 25px;
   display: flex;
   flex-direction: row;
-  height: 100vh;
+  justify-content: space-between; /* Adjusts content to each end */
+  align-items: center; /* Vertically center the items */
+  align-items: left;
+  font-size: 10px;
+  padding: 5px;
+  color: white;
+}
+
+.app-footer__text {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.app-main-container {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 55px - 35px);
 }
 
 /* Add some CSS to make the map take the remaining width */
 .app-map-container {
   position: relative;
-  height: 100vh; /* Adjust if necessary */
+  height: calc(100vh - 55px - 35px); /* Adjust if necessary */
   width: 100%;
-}
-
-.app-sidebar {
-  width: 400px;
-  height: 100%;
-  background-color: #282c34;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-  padding: 20px;
-  box-sizing: border-box;
 }
 
 .app-map-container .line-selector-container {
@@ -90,3 +80,26 @@
   z-index: 20;
 }
 
+.map-header {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 15px;
+  z-index: 1000; /* Ensure it's above the map */
+  background-color: #282c34;
+  border-radius: 5px;
+  padding: 2px;
+  height: 50px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.map-header-elements {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}

@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" modified="2023-11-20T12:13:18.792Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="c0WSIoUMr3Ia9BchE-14" version="22.1.3" type="device">
+  <diagram name="Página-1" id="SPzB9mqLaXg3nGnK8QZi">
+    <mxGraphModel dx="1434" dy="1927" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="dXCWsH7MEPxxU6r3gzLh-1" target="dXCWsH7MEPxxU6r3gzLh-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-1" value="&lt;b&gt;data-producer-app&lt;/b&gt;&lt;br&gt;&lt;br&gt;read data from FGC API: posicionament-dels-trens/&lt;br&gt;and published to kafka topic" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="200" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="dXCWsH7MEPxxU6r3gzLh-3" target="dXCWsH7MEPxxU6r3gzLh-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="dXCWsH7MEPxxU6r3gzLh-3" target="dXCWsH7MEPxxU6r3gzLh-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-3" value="&lt;b&gt;kafka topic&lt;/b&gt;&lt;br&gt;&lt;br&gt;contains data from railway positions&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="200" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="dXCWsH7MEPxxU6r3gzLh-4" target="dXCWsH7MEPxxU6r3gzLh-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-4" value="&lt;b&gt;persistence-app&lt;/b&gt;&lt;br&gt;&lt;br&gt;move data from kafka topic to PostgreSQL table" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="-120" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="dXCWsH7MEPxxU6r3gzLh-5" target="dXCWsH7MEPxxU6r3gzLh-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-5" value="&lt;b&gt;postgres SQL &lt;br&gt;table&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="-120" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="dXCWsH7MEPxxU6r3gzLh-6" target="dXCWsH7MEPxxU6r3gzLh-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-6" value="&lt;b&gt;FGC API&lt;/b&gt;&lt;br&gt;&lt;br&gt;/gtfs_stops" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="360" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="dXCWsH7MEPxxU6r3gzLh-8" target="dXCWsH7MEPxxU6r3gzLh-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-8" value="&lt;b&gt;web-backend (flask)&lt;/b&gt;&lt;br&gt;&lt;br&gt;/latest-positions&lt;br&gt;/railway-stops&lt;br&gt;/railway-lines&lt;br&gt;/future-positions" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="200" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-9" value="&lt;b&gt;web-frontend&lt;/b&gt;&lt;br&gt;&lt;b&gt;(react)&lt;/b&gt;&lt;br&gt;&lt;br&gt;shows positions, stops, lines and allows user to predict future positions of a railway" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="200" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="dXCWsH7MEPxxU6r3gzLh-25" target="dXCWsH7MEPxxU6r3gzLh-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-25" value="&lt;b&gt;predictions-app&lt;/b&gt;&lt;br&gt;&lt;br&gt;connects to PostgresSQL to retrieve historical data, builds model and predicts future positions" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="40" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="dXCWsH7MEPxxU6r3gzLh-28" target="dXCWsH7MEPxxU6r3gzLh-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dXCWsH7MEPxxU6r3gzLh-28" value="&lt;b&gt;FGC API&lt;/b&gt;&lt;br&gt;&lt;br&gt;/gtfs_routes" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="360" width="120" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

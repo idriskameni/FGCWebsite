@@ -1,54 +1,74 @@
 // src/components/Map.tsx
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import trainIcon from '../assets/images/train-icon.png'; // Make sure this path is correct
-import { LatestPositionsEntry, RailwayLinesEntry } from '../types';
+import { PositionsEntry, RouteEntry } from '../types';
+import MapTrainPosition from './MapTrainPosition';
 import MapLine from './MapLine';
+import LineSelector from './LineSelector';
+import PredictionSelector from './PredictionSelector';
 
 interface MapProps {
-  latestPositions: LatestPositionsEntry[];
-  railwayLines: RailwayLinesEntry[];
+  positions: PositionsEntry[];
+  routes: RouteEntry[];
+  selectedRoutes: string[];
+  setSelectedRoutes: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const trainMarkerIcon = L.icon({
-  iconUrl: trainIcon,
-  iconSize: [25, 25], // Size of the icon
-  iconAnchor: [20, 20], // Point of the icon which will correspond to marker's location
-  popupAnchor: [0, -25], // Point from which the popup should open relative to the iconAnchor
-});
+const Map: React.FC<MapProps> = ({ positions, routes, selectedRoutes, setSelectedRoutes }) => {
 
-const Map: React.FC<MapProps> = ({ latestPositions, railwayLines }) => {
-  
+  // Filter positions based on selected routes
+  const filteredPositions = positions.filter(position => 
+    selectedRoutes.includes(position.lin)
+  );
+
+  // Filter routes the same way as before, but also ensure they are in the selected routes
+  const filteredRoutes = routes.filter(route => 
+    selectedRoutes.includes(route.route_id) && route.route_type === 'Rail'
+  );
+
+    
   return (
     <MapContainer center={[41.3879, 2.16992]} zoom={13} style={{ height: '100%', width: '100%' }}>
+
+      {/* I want to render the following component in the top center of the map */}
+      <div className='map-header'>
+        <div className='map-header-elements'>
+          <LineSelector 
+              positions={positions}
+              routes={routes}
+              selectedRoutes={selectedRoutes}
+              setSelectedRoutes={setSelectedRoutes} 
+          />
+          <PredictionSelector />
+        </div>
+      </div>
+
       <TileLayer
         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
       />
 
-      {/* Render railway lines */}
-      {railwayLines?.map((railwayLine) => (
-        <MapLine key={railwayLine.route_id} railwayLine={railwayLine} />
+      {/* Render train markers */}
+      {filteredPositions?.map((position) => (
+          <MapTrainPosition
+            key={position.id}
+            id={position.id}
+            latitude={position.geo_point_2d.lat}
+            longitude={position.geo_point_2d.lon}
+            timestamp={position.timestamp}
+          />
       ))}
 
       {/* Render train markers */}
-      {
-      /**
-      {latestPositions?.map((position) => (
-        <Marker 
-          key={position.id} 
-          position={[position.geo_point_2d.lat, position.geo_point_2d.lon]} 
-          icon={trainMarkerIcon}
-        >
-          <Popup>
-            Train ID: {position.id} <br /> Last Updated: {position.timestamp}
-          </Popup>
-        </Marker>
+        {filteredRoutes?.map((route) => (
+          <MapLine
+            key={route.route_id}
+            coordinates={route.shape.geometry.coordinates[0]}
+            color={route.route_color}
+          />
       ))}
-      */
-      }
+
     </MapContainer>
   );
 

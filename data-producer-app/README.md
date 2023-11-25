@@ -21,7 +21,7 @@ C:\kafka_2.12-3.6.0\bin\windows\kafka-server-start.bat  C:\kafka_2.12-3.6.0\conf
 cd .\data-producer-app\
 python -m venv venv
 venv\Scripts\activate
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 python main.py
 venv\Scripts\deactivate
 cd ..
