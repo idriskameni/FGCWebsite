@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Map from './components/Map';
 import './App.css';
-import { PositionsEntry, RouteEntry } from './types';
+import { PositionsEntry, PredicitonEntry, RouteEntry } from './types';
 import { Header, Footer } from './components';
 
 const App: React.FC = () => {
@@ -11,6 +11,7 @@ const App: React.FC = () => {
   const [lastUpdateTime, setLastUpdateTime] = useState<Date | null>(null);
   const [routes, setRoutes] = useState<RouteEntry[]>([]);
   const [selectedRoutes, setSelectedRoutes] = React.useState<string[]>([]);
+  const [prediction, setPrediction] = useState<PredicitonEntry | null>(null);
 
   useEffect(() => {
     // Set up a timer to fetch the data every 5 seconds
@@ -26,7 +27,7 @@ const App: React.FC = () => {
 
     // Don't forget to clear the interval when the component is unmounted
     return () => clearInterval(interval);
-  }, []);    
+  }, []);
   
   useEffect(() => {
         fetch('http://127.0.0.1:5000/routes')
@@ -52,7 +53,9 @@ const App: React.FC = () => {
               positions={positions}
               routes={routes}
               selectedRoutes={selectedRoutes}
-              setSelectedRoutes={setSelectedRoutes} 
+              setSelectedRoutes={setSelectedRoutes}
+              prediction={prediction}
+              setPrediction={setPrediction}
             />
           </div>
         </div>

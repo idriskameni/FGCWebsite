@@ -90,7 +90,7 @@
   background-color: #282c34;
   border-radius: 5px;
   padding: 2px;
-  height: 50px;
+  height: 30px;
   margin-top: 10px;
   margin-right: 10px;
   margin-left: 10px;
@@ -102,4 +102,22 @@
   justify-content: space-between;
   align-items: center;
   height: 100%;
+}
+
+/** I want the map footer to be at the right bottom corner of the map */
+.map-footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 15px;
+  z-index: 1000; /* Ensure it's above the map */
+  background-color: #282c34;
+  border-radius: 5px;
+  padding: 2px;
+  height: 30px;
+  margin-bottom: 35px;
+  margin-right: 35px;
+  margin-left: 10px;
+  height: 100px;
+  width: 200px;
 }

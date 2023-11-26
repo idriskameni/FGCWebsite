@@ -16,12 +16,10 @@ const AppButton: React.FC<AppButtonProps> = ({ children, handleClickOpen }) => {
                 sx={{ 
                     m: 1, 
                     width: 300, 
-                    height: 35, 
+                    height: 20, 
                     fontSize: '12px',
                     color: 'white',
                     zIndex: 100,
-                    border: '1px solid',
-                    borderColor: 'currentColor',
                     borderRadius: '4px',
                     }}
             >

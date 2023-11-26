@@ -2,20 +2,23 @@
 import React from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { PositionsEntry, RouteEntry } from '../types';
-import MapTrainPosition from './MapTrainPosition';
+import { PositionsEntry, PredicitonEntry, RouteEntry } from '../types';
+import TrainPosition from './TrainPosition';
 import MapLine from './MapLine';
 import LineSelector from './LineSelector';
-import PredictionSelector from './PredictionSelector';
+import TrainPrediction from './TrainPrediction';
+import Legend from './Legend';
 
 interface MapProps {
   positions: PositionsEntry[];
   routes: RouteEntry[];
   selectedRoutes: string[];
   setSelectedRoutes: React.Dispatch<React.SetStateAction<string[]>>;
+  prediction: PredicitonEntry | null;
+  setPrediction: React.Dispatch<React.SetStateAction<PredicitonEntry | null>>;
 }
 
-const Map: React.FC<MapProps> = ({ positions, routes, selectedRoutes, setSelectedRoutes }) => {
+const Map: React.FC<MapProps> = ({ positions, routes, selectedRoutes, setSelectedRoutes, prediction, setPrediction }) => {
 
   // Filter positions based on selected routes
   const filteredPositions = positions.filter(position => 
@@ -40,7 +43,6 @@ const Map: React.FC<MapProps> = ({ positions, routes, selectedRoutes, setSelecte
               selectedRoutes={selectedRoutes}
               setSelectedRoutes={setSelectedRoutes} 
           />
-          <PredictionSelector />
         </div>
       </div>
 
@@ -51,12 +53,12 @@ const Map: React.FC<MapProps> = ({ positions, routes, selectedRoutes, setSelecte
 
       {/* Render train markers */}
       {filteredPositions?.map((position) => (
-          <MapTrainPosition
+          <TrainPosition
             key={position.id}
             id={position.id}
             latitude={position.geo_point_2d.lat}
             longitude={position.geo_point_2d.lon}
-            timestamp={position.timestamp}
+            setPrediction={setPrediction}
           />
       ))}
 
@@ -68,6 +70,23 @@ const Map: React.FC<MapProps> = ({ positions, routes, selectedRoutes, setSelecte
             color={route.route_color}
           />
       ))}
+
+      {/* Render train prediction */}
+      {prediction && (
+        <TrainPrediction
+          key={prediction.id}
+          id={prediction.id}
+          latitude={prediction.latitude}
+          longitude={prediction.longitude}
+        />
+      )}
+
+      {/* I want to render the following component in the bottom right corner of the map*/}
+      <div className='map-footer'>
+        <div className='map-footer-elements'>
+          <Legend />
+        </div>
+      </div>
 
     </MapContainer>
   );

@@ -44,3 +44,10 @@ export interface RouteEntry {
       type: string;
   };
 }
+
+export interface PredicitonEntry {
+  id: string;
+  latitude: number;
+  longitude: number;
+  minutes: number;
+}
