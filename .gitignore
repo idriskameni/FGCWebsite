@@ -1,28 +1,28 @@
-data-persistence-app/venv
-data-producer-app/venv
-predictions-app/venv
-web-backend/venv
+data_persistence_app/venv
+data_producer_app/venv
+predictions_app/venv
+web_backend/venv
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-web-frontend/node_modules
-web-frontend/.pnp
-web-frontend/.pnp.js
+web_frontend/node_modules
+web_frontend/.pnp
+web_frontend/.pnp.js
 
 # testing
-web-frontend/coverage
+web_frontend/coverage
 
 # production
-web-frontend/build
+web_frontend/build
 
 # misc
-web-frontend/.DS_Store
-web-frontend/.env.local
-web-frontend/.env.development.local
-web-frontend/.env.test.local
-web-frontend/.env.production.local
+web_frontend/.DS_Store
+web_frontend/.env.local
+web_frontend/.env.development.local
+web_frontend/.env.test.local
+web_frontend/.env.production.local
 
-web-frontend/npm-debug.log*
-web-frontend/yarn-debug.log*
-web-frontend/yarn-error.log*
+web_frontend/npm-debug.log*
+web_frontend/yarn-debug.log*
+web_frontend/yarn-error.log*

@@ -3,3 +3,4 @@ flask_cors
 kafka-python
 requests
 browser_cookie3
+psycopg2

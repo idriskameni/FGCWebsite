@@ -4,7 +4,7 @@
 
 -----
 
-cd .\predictions-app\
+cd .\predictions_app\
 python -m venv venv
 venv\Scripts\activate
 python.exe -m pip install --upgrade pip 
