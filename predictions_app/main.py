@@ -1,15 +1,21 @@
+import time
 from sklearn.preprocessing import MinMaxScaler, LabelEncoder
 
-from get_data import get_data
-from prepare_data import prepare_data
-from train_model import train_model
+from predictions_app.get_data import get_data
+from predictions_app.prepare_training_input import prepare_training_input
+from predictions_app.create_load_model import create_load_model
+from predictions_app.train_model import train_model
+from predictions_app.prepare_prediction_input import prepare_prediction_input
 
 
 def get_predictions(id, minutes):
 
+    current_epoch = int(time.time())
     model_path = 'models/model.h5'
-    label_encoder = LabelEncoder()
-    scaler = MinMaxScaler()
+    linia_encoder = LabelEncoder()
+    trip_id_encoder = LabelEncoder()
+    geo_scaler = MinMaxScaler()
+    time_scaler = MinMaxScaler()
 
     # Get the data
     print('Getting the data...')
@@ -17,31 +23,35 @@ def get_predictions(id, minutes):
 
     # Prepare the data
     print('Preparing data...')
-    X_train, X_test, y_train, y_test = prepare_data(data, label_encoder, scaler)
+    X_train, X_test, y_train, y_test = prepare_training_input(data, linia_encoder, trip_id_encoder, geo_scaler, time_scaler)
 
     # Train the model
     print('Training the model...')
     train_model(X_train, y_train, X_test, y_test, model_path, input_shape=(X_train.shape[1], X_train.shape[2]))
 
     # Load the model
-    # model = load_model(model_path)
+    model = create_load_model(model_path, input_shape=(X_train.shape[1], X_train.shape[2]))
 
-    # Make future predictions
-    # single_future_point = np.array([[[1700421536.0, 'L7', id]]], dtype='float32')
+    # Prepare the prediction input
+    X_new_sequence = prepare_prediction_input(current_epoch + minutes * 60, 'S1', id, linia_encoder, trip_id_encoder, time_scaler)
 
-    # Replicate the data point to create a sequence of length 5
-    # X_future = np.repeat(single_future_point, 5, axis=0).reshape(1, 5, 3)
-    # predicted_locations = model.predict(X_future)
-    # predicted_locations = scaler.inverse_transform(predicted_locations)
+    # Load the model and make the prediction
+    predicted_coordinates = model.predict(X_new_sequence)
+
+    # Inverse transform the predicted coordinates if they were scaled
+    predicted_coordinates = geo_scaler.inverse_transform(predicted_coordinates)
 
     # Predict the next location
-    latitude = 10
-    longitude = 20
+    latitude = predicted_coordinates[0][0]
+    longitude = predicted_coordinates[0][1]
+
+    print('Predicted locations: ')
+    print(latitude, longitude)
 
     result = {
         "id": id,
-        "latitude": latitude,
-        "longitude": longitude,
+        "latitude":  float(latitude),
+        "longitude":  float(longitude),
         "minutes": minutes
     }
 

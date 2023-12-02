@@ -7,9 +7,9 @@ import sys
 
 sys.path.append(project_root)
 
-from predictions_app.main import predict_next_location
+from predictions_app.main import get_predictions
 
 
-def get_predictions(id, minutes):
+def get_prediction(id, minutes):
     
-    return predict_next_location(id, minutes)
+    return get_predictions(id, minutes)

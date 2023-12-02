@@ -14,13 +14,21 @@ consumer = KafkaConsumer(
     value_deserializer=lambda x: json.loads(x.decode('utf-8'))
 )
 
-# Global lock for thread safety
+# Shared data structure
+positions = {}
 lock = threading.Lock()
 
+
 def get_positions():
-    global positions
     for message in consumer:
         with lock:
             data = message.value
+            print(data)
             positions[data['id']] = data
             positions[data['id']]['timestamp'] = message.timestamp
+
+
+# Export positions and lock for other modules
+def get_positions_data():
+    with lock:
+        return positions.copy()

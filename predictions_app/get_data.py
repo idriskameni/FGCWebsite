@@ -7,8 +7,14 @@ def get_data():
 
     result = []
 
+    # Get the path of the current script (website_backend/your_script.py)
+    current_script_path = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct the path to config.json in the predictions_app directory
+    config_file_path = os.path.join(current_script_path, '..', 'predictions_app', 'config.json')
+
     # Read config.json and get the latest time stamp
-    with open('config.json', 'r') as file:
+    with open(config_file_path, 'r') as file:
         data = json.load(file)
         latest_train_time_stamp = data['latest_train_time_stamp']
 

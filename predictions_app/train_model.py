@@ -1,5 +1,6 @@
-from create_load_model import create_load_model
 from keras.callbacks import ModelCheckpoint
+
+from predictions_app.create_load_model import create_load_model
 
 
 def train_model(X_train, y_train, X_test, y_test, model_path, input_shape):
