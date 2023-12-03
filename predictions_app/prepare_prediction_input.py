@@ -30,4 +30,6 @@ def prepare_prediction_input(epoch, linia, trip_id, linia_encoder, trip_id_encod
     X_new = df[['epoch_scaled', 'linia_encoded', 'trip_id_encoded']].values
     X_new_sequence = X_new.reshape((1, sequence_length, -1))
 
+    print('X_new_sequence shape:', X_new_sequence.shape)
+
     return X_new_sequence

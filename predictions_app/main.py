@@ -9,6 +9,7 @@ from predictions_app.prepare_training_input import prepare_training_input
 from predictions_app.create_load_model import create_load_model
 from predictions_app.train_model import train_model
 from predictions_app.prepare_prediction_input import prepare_prediction_input
+from predictions_app.update_config import update_config
 
 
 def get_predictions(linia, id, minutes):
@@ -26,7 +27,7 @@ def get_predictions(linia, id, minutes):
 
     # Get the data
     print('Getting the data...')
-    data = get_data(linia)
+    data, max_time_stamp = get_data(linia)
 
     # Prepare the data
     print('Preparing data...')
@@ -46,19 +47,22 @@ def get_predictions(linia, id, minutes):
     predicted_probabilities = model.predict(X_new_sequence)
     max_value_index = np.argmax(predicted_probabilities.flatten())
 
-    print(max_value_index)
-
     classes_dict_inverted = {v: k for k, v in classes_dict.items()}
     predicted_coordinates = classes_dict_inverted.get(max_value_index, None)
-
-    print(predicted_coordinates)
 
     # Predict the next location
     latitude = predicted_coordinates[1]
     longitude = predicted_coordinates[0]
 
-    print('Predicted locations: ')
-    print(latitude, longitude)
+    update_config(
+        linia,
+        datetime.fromtimestamp(current_epoch).strftime('%Y-%m-%d %H:%M:%S'), 
+        max_time_stamp,
+        id, 
+        minutes,
+        latitude, 
+        longitude
+    )
 
     result = {
         "id": id,

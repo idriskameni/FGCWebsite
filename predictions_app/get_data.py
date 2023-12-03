@@ -16,7 +16,12 @@ def get_data(linia):
     # Read config.json and get the latest time stamp
     with open(config_file_path, 'r') as file:
         data = json.load(file)
-        latest_train_time_stamp = data['latest_train_time_stamp']
+
+        if linia in data:
+            latest_train_time_stamp = data[linia]['latest_train_time_stamp']
+        else:
+            latest_train_time_stamp = '2019-01-01 00:00:00'
+    
 
     # Define the query file name
     file_name = "queries/select_train_positions.sql"
@@ -53,18 +58,23 @@ def get_data(linia):
         # Format the query with the provided values
         formatted_query = query_template.format(*values)
 
+        print(formatted_query)
+
         # Execute the query
         cur.execute(formatted_query)
         result = cur.fetchall()
         conn.commit()
 
         # Print a success message
-        print("Query executed successfully")
+        print('--> Query executed successfully')
+        print('--> Number of rows returned: ', len(result))
+
+        print(result[0:5])
 
     # If an error occurs, print it
     except Exception as e:
 
-        print("An error occurred:", e)
+        print("--> An error occurred:", e)
 
     # Close the database connection
     finally:
@@ -72,5 +82,12 @@ def get_data(linia):
         cur.close()
         conn.close()
     
-    # Return the query result
-    return result
+    # Process the result to find the maximum timestamp
+    max_timestamp = None
+    if result:
+        # Assuming the timestamp is the first element in each row
+        max_timestamp = max(row[0] for row in result)
+
+    print('--> Max timestamp: {0}'.format(max_timestamp))
+
+    return result, max_timestamp.strftime('%Y-%m-%d %H:%M:%S')
