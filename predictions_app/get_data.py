@@ -3,7 +3,7 @@ import os
 import psycopg2
 
 
-def get_data():
+def get_data(linia):
 
     result = []
 
@@ -20,7 +20,7 @@ def get_data():
 
     # Define the query file name
     file_name = "queries/select_train_positions.sql"
-    values = (latest_train_time_stamp,)
+    values = (latest_train_time_stamp, linia,)
 
     # Define the database connection parameters
     db_params = {

@@ -25,9 +25,9 @@ def routes_route():
     return jsonify(get_routes())
 
 
-@app.route('/predictions/<string:id>/<int:minutes>', methods=['GET'])
-def predictions_route(id, minutes):
-    return jsonify(get_prediction(id, minutes))
+@app.route('/predictions/<string:linia>/<string:id>/<int:minutes>', methods=['GET'])
+def predictions_route(linia, id, minutes):
+    return jsonify(get_prediction(linia, id, minutes))
 
 
 if __name__ == '__main__':

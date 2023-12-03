@@ -6,7 +6,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ lastUpdateTime }) => {
 
-  const formattedTime = lastUpdateTime ? lastUpdateTime.toLocaleDateString() + ' ' + lastUpdateTime.toLocaleTimeString() : 'Not yet updated';
+  const formattedTime = lastUpdateTime ? lastUpdateTime.toLocaleDateString() + ' ' + lastUpdateTime.toLocaleTimeString() : 'Encara no hi ha dades';
 
   return (
     <>

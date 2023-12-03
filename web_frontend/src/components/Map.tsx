@@ -1,13 +1,16 @@
 // src/components/Map.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { AlertColor } from '@mui/material/Alert';
+
 import { PositionsEntry, PredicitonEntry, RouteEntry } from '../types';
 import TrainPosition from './TrainPosition';
 import MapLine from './MapLine';
 import LineSelector from './LineSelector';
 import TrainPrediction from './TrainPrediction';
 import Legend from './Legend';
+import ModelAlert from './ModelAlert';
 
 interface MapProps {
   positions: PositionsEntry[];
@@ -18,7 +21,16 @@ interface MapProps {
   setPrediction: React.Dispatch<React.SetStateAction<PredicitonEntry | null>>;
 }
 
-const Map: React.FC<MapProps> = ({ positions, routes, selectedRoutes, setSelectedRoutes, prediction, setPrediction }) => {
+const Map: React.FC<MapProps> = ({ 
+  positions, routes, selectedRoutes, setSelectedRoutes, prediction, setPrediction
+}) => {
+
+  const [latestPressedId, setLatestPressedId] = useState<string | null>(null); // Add state for latest pressed ID
+  const [loading, setLoading] = useState<boolean>(false);
+  const [predictionId, setPredictionId] = useState<string | null>(null);
+  const [predictionSliderValue, setPredictionSliderValue] = useState<number | null>(null);
+  const [predictionLin, setPredictionLin] = useState<string | null>(null);
+  const [severity, setSeverity] = useState<AlertColor | undefined>(undefined);
 
   // Filter positions based on selected routes
   const filteredPositions = positions.filter(position => 
@@ -30,7 +42,62 @@ const Map: React.FC<MapProps> = ({ positions, routes, selectedRoutes, setSelecte
     selectedRoutes.includes(route.route_id) && route.route_type === 'Rail'
   );
 
+  const handleClose = (id: string | null, lin: string | null, sliderValue: number | null) => {
+
+    setLatestPressedId(id);
+    setPredictionId(id);
+    setPredictionLin(lin);
+    setPredictionSliderValue(sliderValue);
+    setLoading(true);
+    setPrediction(null);
     
+    // Make the API call directly here
+    fetch(`http://127.0.0.1:5000/predictions/${lin}/${id}/${sliderValue}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            setPrediction(data);
+        })
+        .catch((error) => { 
+          console.error('Error fetching data:', error);
+          setSeverity('error');
+        })
+        .finally(() => {
+            // Re-enable the "SOTMET" button after the API call is completed
+            setLoading(false);
+            setSeverity('success');
+            
+        });
+
+  };
+
+  useEffect(() => {
+    if (loading) {
+      // Loading is true, show loading message
+      setSeverity('info');
+    } else if (severity === 'success') {
+      // Loading is false, show success message for 3 seconds
+      const successTimeout = setTimeout(() => {
+        setSeverity(undefined); // Reset to no message after 3 seconds
+      }, 5000);
+      
+      // Cleanup the timeout when component unmounts or loading changes
+      return () => clearTimeout(successTimeout);
+    } else if (severity === 'error') {
+      // Loading is false, show success message for 3 seconds
+      const successTimeout = setTimeout(() => {
+        setSeverity(undefined); // Reset to no message after 3 seconds
+      }, 5000);
+      
+      // Cleanup the timeout when component unmounts or loading changes
+      return () => clearTimeout(successTimeout);
+    }
+  }, [loading, severity]);
+
   return (
     <MapContainer center={[41.3879, 2.16992]} zoom={13} style={{ height: '100%', width: '100%' }}>
 
@@ -44,6 +111,7 @@ const Map: React.FC<MapProps> = ({ positions, routes, selectedRoutes, setSelecte
               setSelectedRoutes={setSelectedRoutes} 
           />
         </div>
+        <ModelAlert loading={loading} severity={severity} />
       </div>
 
       <TileLayer
@@ -56,9 +124,15 @@ const Map: React.FC<MapProps> = ({ positions, routes, selectedRoutes, setSelecte
           <TrainPosition
             key={position.id}
             id={position.id}
+            lin={position.lin}
             latitude={position.geo_point_2d.lat}
             longitude={position.geo_point_2d.lon}
-            setPrediction={setPrediction}
+            latestPressedId={latestPressedId}
+            loading={loading}
+            handleClose={handleClose}
+            predictionId={predictionId}
+            predictionSliderValue={predictionSliderValue}
+            predictionLin={predictionLin}
           />
       ))}
 
@@ -78,6 +152,7 @@ const Map: React.FC<MapProps> = ({ positions, routes, selectedRoutes, setSelecte
           id={prediction.id}
           latitude={prediction.latitude}
           longitude={prediction.longitude}
+          time={prediction.time}
         />
       )}
 

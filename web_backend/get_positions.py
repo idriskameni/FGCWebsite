@@ -23,7 +23,6 @@ def get_positions():
     for message in consumer:
         with lock:
             data = message.value
-            print(data)
             positions[data['id']] = data
             positions[data['id']]['timestamp'] = message.timestamp
 

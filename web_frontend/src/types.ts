@@ -49,5 +49,5 @@ export interface PredicitonEntry {
   id: string;
   latitude: number;
   longitude: number;
-  minutes: number;
+  time: string;
 }

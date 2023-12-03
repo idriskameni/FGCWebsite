@@ -4,7 +4,7 @@
 
 -----
 
-cd .\web-frontend\
+cd .\web_frontend\
 npm install
 npm start
 

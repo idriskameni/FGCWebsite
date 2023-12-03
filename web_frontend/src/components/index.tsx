@@ -6,3 +6,4 @@ export { default as AppButton } from './AppButton';
 export { default as TrainPositionPopup } from './TrainPositionPopup';
 export { default as TrainPosition } from './TrainPosition';
 export { default as Legend } from './Legend';
+export { default as ModelAlert } from './ModelAlert';

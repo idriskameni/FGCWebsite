@@ -22,14 +22,7 @@ C:\kafka_2.12-3.6.0\bin\windows\kafka-server-start.bat  C:\kafka_2.12-3.6.0\conf
 
 -----
 
-cd .\data_producer_app\
-python -m venv venv
-venv\Scripts\activate
-python.exe -m pip install --upgrade pip 
-pip install -r requirements.txt
-python main.py
-venv\Scripts\deactivate
-cd ..
+run_data_producer_app.bat
 
 -----
 
@@ -37,54 +30,23 @@ cd ..
 
 -----
 
-cd .\data_persistence_app\
-python -m venv venv
-venv\Scripts\activate
-python.exe -m pip install --upgrade pip 
-pip install -r requirements.txt
-python main.py
-venv\Scripts\deactivate
-cd ..
+run_data_persistence_app.bat
 
 -----
 
-# PREDICTIONS_APP
+# WEB_BACK_END
 
 -----
 
-cd .\predictions_app\
-python -m venv venv
-venv\Scripts\activate
-python.exe -m pip install --upgrade pip 
-pip install -r requirements.txt
-python main.py
-venv\Scripts\deactivate
-cd ..
+run_web_back_end.bat
 
 -----
 
-# WEB-BACKEND
+# WEB_FRONT_END
 
 -----
 
-cd .\web_backend\
-python -m venv venv
-venv\Scripts\activate
-python.exe -m pip install --upgrade pip 
-pip install -r requirements.txt
-python main.py
-venv\Scripts\deactivate
-cd ..
-
------
-
-# WEB-FRONTEND
-
------
-
-cd .\web_frontend\
-npm install
-npm start
+run_web_front_end.bat
 
 -----
 

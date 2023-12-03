@@ -8,11 +8,13 @@ interface TrainPredictionProps {
     latitude: number;
     longitude: number;
     id: string;
+    time: string;
 }
 
-const TrainPrediction: React.FC<TrainPredictionProps> = ({ latitude, longitude, id }) => {
+const TrainPrediction: React.FC<TrainPredictionProps> = ({ latitude, longitude, id, time }) => {
 
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(true);
+
 
     const trainMarkerIcon = L.icon({
         iconUrl: predictionIcon,
@@ -37,7 +39,10 @@ const TrainPrediction: React.FC<TrainPredictionProps> = ({ latitude, longitude, 
                 }}
             >
                 {isPopupOpen && (
-                    <TrainPredictionPopup />
+                    <TrainPredictionPopup 
+                        id={id}
+                        time={time}
+                    />
                 )}
             </Marker>
         </>
