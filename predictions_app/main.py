@@ -12,11 +12,10 @@ from predictions_app.prepare_prediction_input import prepare_prediction_input
 from predictions_app.update_config import update_config
 
 
-def get_predictions(linia, id, minutes):
+def get_predictions(linia, dir, en_hora, id, minutes):
 
     current_epoch = int(time.time())
     model_path = f'models/model_{linia}.h5'
-    linia_encoder = LabelEncoder()
     trip_id_encoder = LabelEncoder()
     time_scaler = MinMaxScaler()
 
@@ -31,17 +30,17 @@ def get_predictions(linia, id, minutes):
 
     # Prepare the data
     print('Preparing data...')
-    X_train, X_test, y_train, y_test = prepare_training_input(data, classes_dict, linia_encoder, trip_id_encoder, time_scaler)
+    X_train, X_test, y_train, y_test = prepare_training_input(data, classes_dict, trip_id_encoder, time_scaler)
+
+    # Create or load the model
+    model = create_load_model(input_shape=(X_train.shape[1], X_train.shape[2]), num_classes=len(classes_dict))
 
     # Train the model
     print('Training the model...')
-    train_model(X_train, y_train, X_test, y_test, model_path, input_shape=(X_train.shape[1], X_train.shape[2]), num_classes=len(classes_dict))
-
-    # Load the model
-    model = create_load_model(model_path, input_shape=(X_train.shape[1], X_train.shape[2]), num_classes=len(classes_dict))
+    model = train_model(model, X_train, y_train, X_test, y_test)
 
     # Prepare the prediction input
-    X_new_sequence = prepare_prediction_input(current_epoch + minutes * 60, linia, id, linia_encoder, trip_id_encoder, time_scaler)
+    X_new_sequence = prepare_prediction_input(current_epoch + minutes * 60, dir, en_hora, id, trip_id_encoder, time_scaler)
 
     # Load the model and make the prediction
     predicted_probabilities = model.predict(X_new_sequence)
@@ -54,6 +53,7 @@ def get_predictions(linia, id, minutes):
     latitude = predicted_coordinates[1]
     longitude = predicted_coordinates[0]
 
+    """
     update_config(
         linia,
         datetime.fromtimestamp(current_epoch).strftime('%Y-%m-%d %H:%M:%S'), 
@@ -63,6 +63,7 @@ def get_predictions(linia, id, minutes):
         latitude, 
         longitude
     )
+    """
 
     result = {
         "id": id,

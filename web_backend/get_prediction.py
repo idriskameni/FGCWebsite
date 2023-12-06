@@ -10,6 +10,6 @@ sys.path.append(project_root)
 from predictions_app.main import get_predictions
 
 
-def get_prediction(linia, id, minutes):
+def get_prediction(linia, dir, en_hora, id, minutes):
     
-    return get_predictions(linia, id, minutes)
+    return get_predictions(linia, dir, en_hora, id, minutes)

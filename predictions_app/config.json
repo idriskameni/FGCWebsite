@@ -1,19 +1,27 @@
 {
     "S1": {
-        "latest_api_call": "2019-06-01 00:00:00",
-        "latest_train_time_stamp": "2023-01-01 00:00:00",
+        "latest_api_call": "2023-12-06 12:22:45",
+        "latest_train_time_stamp": "2023-12-06 12:22:34",
         "latest_linia_predicted": "1",
-        "latest_trip_id_predicted": "20190531-1-1",
-        "latest_range_time_predicted": 15,
-        "latest_latitude_predicted": 40.758,
-        "latest_longitude_predicted": -73.989
+        "latest_trip_id_predicted": "6c4bdab144746c0fbe55c60d5b|6a2dc7e005",
+        "latest_range_time_predicted": 30,
+        "latest_latitude_predicted": 41.58017774,
+        "latest_longitude_predicted": 2.013401844
     },
     "S2": {
-        "latest_api_call": "2023-12-03 20:04:47",
-        "latest_train_time_stamp": "2023-11-27 15:11:17",
-        "latest_trip_id_predicted": "6c4bdab144746c0fbe55c60d5b|6a2dc7e502",
-        "latest_range_time_predicted": 15,
-        "latest_latitude_predicted": 41.571345928242,
-        "latest_longitude_predicted": 2.0898199773245
+        "latest_api_call": "2023-12-06 12:16:42",
+        "latest_train_time_stamp": "2023-12-06 12:16:41",
+        "latest_trip_id_predicted": "6c4bdab144746c0fbe55c60d5b|682dc7e003",
+        "latest_range_time_predicted": 30,
+        "latest_latitude_predicted": 41.4410705,
+        "latest_longitude_predicted": 2.0726899999999997
+    },
+    "S4": {
+        "latest_api_call": "2023-12-06 12:20:51",
+        "latest_train_time_stamp": "2023-12-06 12:20:41",
+        "latest_trip_id_predicted": "625cdae602743a|612dc6e206",
+        "latest_range_time_predicted": 5,
+        "latest_latitude_predicted": 41.438725069814,
+        "latest_longitude_predicted": 1.9888955119351
     }
 }

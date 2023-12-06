@@ -25,7 +25,7 @@ def get_data(linia):
 
     # Define the query file name
     file_name = "queries/select_train_positions.sql"
-    values = (latest_train_time_stamp, linia,)
+    values = (linia,)
 
     # Define the database connection parameters
     db_params = {
