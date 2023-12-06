@@ -27,9 +27,11 @@ const Map: React.FC<MapProps> = ({
 
   const [latestPressedId, setLatestPressedId] = useState<string | null>(null); // Add state for latest pressed ID
   const [loading, setLoading] = useState<boolean>(false);
+  const [predictionLin, setPredictionLin] = useState<string | null>(null);
+  const [predictionDir, setPredictionDir] = useState<string | null>(null);
+  const [predictionOnTime, setPredictionOnTime] = useState<string | null>(null);
   const [predictionId, setPredictionId] = useState<string | null>(null);
   const [predictionSliderValue, setPredictionSliderValue] = useState<number | null>(null);
-  const [predictionLin, setPredictionLin] = useState<string | null>(null);
   const [severity, setSeverity] = useState<AlertColor | undefined>(undefined);
 
   // Filter positions based on selected routes
@@ -42,17 +44,19 @@ const Map: React.FC<MapProps> = ({
     selectedRoutes.includes(route.route_id) && route.route_type === 'Rail'
   );
 
-  const handleClose = (id: string | null, lin: string | null, sliderValue: number | null) => {
+  const handleClose = (lin: string | null, dir: string | null, onTime: string | null, id: string | null, sliderValue: number | null) => {
 
     setLatestPressedId(id);
-    setPredictionId(id);
     setPredictionLin(lin);
+    setPredictionDir(null);
+    setPredictionOnTime(null);
+    setPredictionId(id);
     setPredictionSliderValue(sliderValue);
     setLoading(true);
     setPrediction(null);
     
     // Make the API call directly here
-    fetch(`http://127.0.0.1:5000/predictions/${lin}/${id}/${sliderValue}`)
+    fetch(`http://127.0.0.1:5000/predictions/${lin}/${dir}/${onTime}/${id}/${sliderValue}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -123,16 +127,20 @@ const Map: React.FC<MapProps> = ({
       {filteredPositions?.map((position) => (
           <TrainPosition
             key={position.id}
-            id={position.id}
             lin={position.lin}
+            dir={position.dir}
+            onTime={position.en_hora}
+            id={position.id}
             latitude={position.geo_point_2d.lat}
             longitude={position.geo_point_2d.lon}
             latestPressedId={latestPressedId}
             loading={loading}
             handleClose={handleClose}
+            predictionLin={predictionLin}
+            predictionDir={predictionDir}
+            predictionOnTime={predictionOnTime}
             predictionId={predictionId}
             predictionSliderValue={predictionSliderValue}
-            predictionLin={predictionLin}
           />
       ))}
 

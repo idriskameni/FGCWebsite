@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
@@ -13,16 +13,20 @@ interface TrainPositionPopupProps {
         activeThumb?: number
     ) => void;
     handleClose: (
-        id: string | null,
         lin: string | null,
+        dir: string | null,
+        onTime: string | null,
+        id: string | null,
         sliderValue: number | null
     ) => void;
     isPopupOpen: boolean;
     setIsPopupOpen: React.Dispatch<React.SetStateAction<boolean>>;
     loading: boolean;
+    predictionLin: string | null;
+    predictionDir: string | null;
+    predictionOnTime: string | null;
     predictionId: string | null;
     predictionSliderValue: number | null;
-    predictionLin: string | null;
 }
 
 const TrainPositionPopup: React.FC<TrainPositionPopupProps> = ({
@@ -33,14 +37,16 @@ const TrainPositionPopup: React.FC<TrainPositionPopupProps> = ({
     isPopupOpen,
     setIsPopupOpen,
     loading,
-    predictionId,
     predictionLin,
+    predictionDir,
+    predictionOnTime,
+    predictionId,
     predictionSliderValue
 }) => {
 
   const handleSOTMETClick = () => {
     if (!loading) {
-      handleClose(predictionId, predictionLin, predictionSliderValue);
+      handleClose(predictionLin, predictionDir, predictionOnTime, predictionId, predictionSliderValue);
       closePopup();
     }
   };

@@ -8,17 +8,21 @@ import TrainPositionPopup from './TrainPositionPopup';
 interface TrainPositionProps {
     latitude: number;
     longitude: number;
-    id: string;
     lin: string;
-    handleClose: (id: string | null, lin: string | null, sliderValue: number | null) => void;
+    dir: string;
+    onTime: string;
+    id: string;
+    handleClose: (lin: string | null, dir: string | null, onTime: string | null, id: string | null, sliderValue: number | null) => void;
     latestPressedId: string | null;
     loading: boolean;
+    predictionLin: string | null;
+    predictionDir: string | null;
+    predictionOnTime: string | null;
     predictionId: string | null;
     predictionSliderValue: number | null;
-    predictionLin: string | null;
 }
 
-const TrainPosition: React.FC<TrainPositionProps> = ({ latitude, longitude, id, lin, handleClose, latestPressedId, loading }) => {
+const TrainPosition: React.FC<TrainPositionProps> = ({ latitude, longitude, lin, dir, onTime, id, handleClose, latestPressedId, loading }) => {
 
     const [sliderValue, setSliderValue] = useState<number>(30);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(true);
@@ -64,8 +68,10 @@ const TrainPosition: React.FC<TrainPositionProps> = ({ latitude, longitude, id, 
                         isPopupOpen={isPopupOpen}
                         setIsPopupOpen={setIsPopupOpen}
                         loading={loading}
-                        predictionId={id}
                         predictionLin={lin}
+                        predictionDir={dir}
+                        predictionOnTime={onTime}
+                        predictionId={id}
                         predictionSliderValue={sliderValue}
                     />
                 )}
