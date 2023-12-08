@@ -1,4 +1,3 @@
-// src/components/Map.tsx
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -12,15 +11,17 @@ import TrainPrediction from './TrainPrediction';
 import Legend from './Legend';
 import ModelAlert from './ModelAlert';
 
+// Define the props interface for Map
 interface MapProps {
-  positions: PositionsEntry[];
-  routes: RouteEntry[];
-  selectedRoutes: string[];
-  setSelectedRoutes: React.Dispatch<React.SetStateAction<string[]>>;
-  prediction: PredicitonEntry | null;
-  setPrediction: React.Dispatch<React.SetStateAction<PredicitonEntry | null>>;
+  positions: PositionsEntry[]; // The positions data
+  routes: RouteEntry[]; // The available routes
+  selectedRoutes: string[]; // The currently selected routes
+  setSelectedRoutes: React.Dispatch<React.SetStateAction<string[]>>; // Function to update selected routes
+  prediction: PredicitonEntry | null; // Prediction data
+  setPrediction: React.Dispatch<React.SetStateAction<PredicitonEntry | null>>; // Function to update prediction
 }
 
+// Define the Map functional component
 const Map: React.FC<MapProps> = ({ 
   positions, routes, selectedRoutes, setSelectedRoutes, prediction, setPrediction
 }) => {
@@ -44,6 +45,7 @@ const Map: React.FC<MapProps> = ({
     selectedRoutes.includes(route.route_id) && route.route_type === 'Rail'
   );
 
+  // Function to handle closing the TrainPrediction component
   const handleClose = (lin: string | null, dir: string | null, onTime: string | null, id: string | null, sliderValue: number | null) => {
 
     setLatestPressedId(id);
@@ -79,6 +81,7 @@ const Map: React.FC<MapProps> = ({
 
   };
 
+  // UseEffect to handle loading and success messages
   useEffect(() => {
     if (loading) {
       // Loading is true, show loading message
@@ -105,7 +108,7 @@ const Map: React.FC<MapProps> = ({
   return (
     <MapContainer center={[41.3879, 2.16992]} zoom={13} style={{ height: '100%', width: '100%' }}>
 
-      {/* I want to render the following component in the top center of the map */}
+      {/* Render the following component in the top center of the map */}
       <div className='map-header'>
         <div className='map-header-elements'>
           <LineSelector 
@@ -164,7 +167,7 @@ const Map: React.FC<MapProps> = ({
         />
       )}
 
-      {/* I want to render the following component in the bottom right corner of the map*/}
+      {/* Render the following component in the bottom right corner of the map*/}
       <div className='map-footer'>
         <div className='map-footer-elements'>
           <Legend />
@@ -176,4 +179,4 @@ const Map: React.FC<MapProps> = ({
 
 };
 
-export default Map;
+export default Map; // Export the Map component

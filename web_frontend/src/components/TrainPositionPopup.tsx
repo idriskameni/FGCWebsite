@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
 import { Popup } from 'react-leaflet';
 
+// Define the props interface for TrainPositionPopup
 interface TrainPositionPopupProps {
     id: string;
     sliderValue: number;
@@ -29,6 +30,7 @@ interface TrainPositionPopupProps {
     predictionSliderValue: number | null;
 }
 
+// Define the TrainPositionPopup functional component
 const TrainPositionPopup: React.FC<TrainPositionPopupProps> = ({
     id,
     sliderValue,
@@ -44,19 +46,23 @@ const TrainPositionPopup: React.FC<TrainPositionPopupProps> = ({
     predictionSliderValue
 }) => {
 
+  // Function to handle the "SOTMET" button click
   const handleSOTMETClick = () => {
     if (!loading) {
+      // Call the handleClose function with prediction details and close the popup
       handleClose(predictionLin, predictionDir, predictionOnTime, predictionId, predictionSliderValue);
       closePopup();
     }
   };
 
+  // Function to close the popup
   const closePopup = () => {
     setIsPopupOpen(false);
   };
 
   return (
     <>
+      {/* Render the popup content based on the popup state and loading state */}
       {isPopupOpen && !loading ? (
         <Popup>
           <div style={{ padding: '20px' }}>
@@ -68,6 +74,7 @@ const TrainPositionPopup: React.FC<TrainPositionPopupProps> = ({
             </p>
           </div>
           <Box sx={{ width: 300 }}>
+            {/* Slider to select prediction time */}
             <Slider
               defaultValue={50}
               value={sliderValue}
@@ -97,6 +104,7 @@ const TrainPositionPopup: React.FC<TrainPositionPopupProps> = ({
               <p>Minuts:<br />{sliderValue} mins</p>
             </div>
             <div style={{ textAlign: 'right' }}>
+              {/* Button to initiate prediction */}
               <Button onClick={handleSOTMETClick}>
                 {'SOTMET'}
               </Button>
@@ -111,9 +119,9 @@ const TrainPositionPopup: React.FC<TrainPositionPopupProps> = ({
               <p>Estem fent la predicció sobre el tren seleccionat.</p>
             </div>
         </Popup>
-        )}
+      )}
     </>
   );
 };
 
-export default TrainPositionPopup;
+export default TrainPositionPopup; // Export the TrainPositionPopup component

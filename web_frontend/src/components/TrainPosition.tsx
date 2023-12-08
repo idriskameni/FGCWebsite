@@ -5,6 +5,7 @@ import trainIcon from '../assets/images/train-icon.png';
 import selectedIcon from '../assets/images/selected-icon.png';
 import TrainPositionPopup from './TrainPositionPopup';
 
+// Define the props interface for TrainPosition
 interface TrainPositionProps {
     latitude: number;
     longitude: number;
@@ -22,11 +23,16 @@ interface TrainPositionProps {
     predictionSliderValue: number | null;
 }
 
+// Define the TrainPosition functional component
 const TrainPosition: React.FC<TrainPositionProps> = ({ latitude, longitude, lin, dir, onTime, id, handleClose, latestPressedId, loading }) => {
 
+    // State to manage the slider value for prediction time
     const [sliderValue, setSliderValue] = useState<number>(30);
+
+    // State to manage whether the popup is open
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(true);
 
+    // Create a custom train marker icon based on the latestPressedId
     const trainMarkerIcon = L.icon({
         iconUrl: latestPressedId === id ? selectedIcon : trainIcon,
         iconSize: [25, 25], // Size of the icon
@@ -34,6 +40,7 @@ const TrainPosition: React.FC<TrainPositionProps> = ({ latitude, longitude, lin,
         popupAnchor: [0, -12], // Point from which the popup should open relative to the iconAnchor
     });
 
+    // Function to handle slider value change
     const handleSliderChange = (
         event: Event, 
         newValue: number | number[],
@@ -44,13 +51,14 @@ const TrainPosition: React.FC<TrainPositionProps> = ({ latitude, longitude, lin,
         }
     };
 
+    // Function to handle marker click and open the popup
     const handleMarkerClick = () => {
         setIsPopupOpen(true); // Show the Popup
     };
 
-
     return (
         <>
+            {/* Render the train marker on the map */}
             <Marker 
                 key={id} 
                 position={[latitude, longitude]} 
@@ -59,6 +67,7 @@ const TrainPosition: React.FC<TrainPositionProps> = ({ latitude, longitude, lin,
                     click: handleMarkerClick,
                 }}
             >
+                {/* Render the TrainPositionPopup when the popup is open */}
                 {isPopupOpen && (
                     <TrainPositionPopup 
                         id={id}
@@ -80,4 +89,4 @@ const TrainPosition: React.FC<TrainPositionProps> = ({ latitude, longitude, lin,
     );
 }
 
-export default TrainPosition;
+export default TrainPosition; // Export the TrainPosition component

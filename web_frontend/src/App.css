@@ -1,3 +1,4 @@
+/* Styles for the header of the application */
 .app-header {
   background-color: #282c34;
   height: 45px;
@@ -5,12 +6,13 @@
   flex-direction: row;
   justify-content: space-between; /* Adjusts content to each end */
   align-items: center; /* Vertically center the items */
-  align-items: left;
+  align-items: left; /* This line has no effect and can be removed */
   font-size: 10px;
   padding: 5px;
   color: white;
 }
 
+/* Styles for the application logo in the header */
 .app-header__logo {
   height: 45px;
   top: 50%;
@@ -19,6 +21,7 @@
   padding-bottom: 15px;
 }
 
+/* Styles for the last update information in the header */
 .app-header__last-update {  
   height: 45px;
   top: 50%;
@@ -26,6 +29,7 @@
   padding-right: 20px; /* Adds some padding to the right */
 }
 
+/* Styles for the footer of the application */
 .app-footer {
   background-color: #282c34;
   height: 25px;
@@ -33,31 +37,34 @@
   flex-direction: row;
   justify-content: space-between; /* Adjusts content to each end */
   align-items: center; /* Vertically center the items */
-  align-items: left;
+  align-items: left; /* This line has no effect and can be removed */
   font-size: 10px;
   padding: 5px;
   color: white;
 }
 
+/* Styles for the text within the footer */
 .app-footer__text {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
+/* Styles for the main container of the application */
 .app-main-container {
   display: flex;
   flex-direction: row;
   height: calc(100vh - 55px - 35px);
 }
 
-/* Add some CSS to make the map take the remaining width */
+/* Styles for the map container within the main container */
 .app-map-container {
   position: relative;
   height: calc(100vh - 55px - 35px); /* Adjust if necessary */
   width: 100%;
 }
 
+/* Styles for a container within the map for line selection */
 .app-map-container .line-selector-container {
   position: absolute;
   top: 10px; /* Adjust as needed */
@@ -66,12 +73,14 @@
   z-index: 20;
 }
 
+/* Styles for a container within the map for map display */
 .app-map-container .map-container {
   position: relative;
   height: 100%;
   z-index: 10;
 }
 
+/* Styles for a container within the map for legend of selected lines */
 .app-map-container .selected-lines-legend-container {
   position: absolute;
   top: 10px; /* Adjust as needed */
@@ -80,6 +89,7 @@
   z-index: 20;
 }
 
+/* Styles for the header above the map */
 .map-header {
   position: absolute;
   top: 0;
@@ -96,6 +106,7 @@
   margin-left: 10px;
 }
 
+/* Styles for elements within the map header */
 .map-header-elements {
   display: flex;
   flex-direction: row;
@@ -104,7 +115,7 @@
   height: 100%;
 }
 
-/** I want the map footer to be at the right bottom corner of the map */
+/* Styles for the footer below the map */
 .map-footer {
   position: absolute;
   bottom: 0;

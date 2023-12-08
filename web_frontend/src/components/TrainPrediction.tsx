@@ -4,6 +4,7 @@ import { Marker } from 'react-leaflet';
 import predictionIcon from '../assets/images/prediction-icon.png';
 import TrainPredictionPopup from './TrainPredictionPopup';
 
+// Define the props interface for TrainPrediction
 interface TrainPredictionProps {
     latitude: number;
     longitude: number;
@@ -11,11 +12,13 @@ interface TrainPredictionProps {
     time: string;
 }
 
+// Define the TrainPrediction functional component
 const TrainPrediction: React.FC<TrainPredictionProps> = ({ latitude, longitude, id, time }) => {
 
+    // State to control whether the popup is open or not
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(true);
 
-
+    // Define the train marker icon using Leaflet
     const trainMarkerIcon = L.icon({
         iconUrl: predictionIcon,
         iconSize: [25, 25], // Size of the icon
@@ -23,10 +26,10 @@ const TrainPrediction: React.FC<TrainPredictionProps> = ({ latitude, longitude, 
         popupAnchor: [0, -12], // Point from which the popup should open relative to the iconAnchor
     });
 
+    // Function to handle marker click and open the popup
     const handleMarkerClick = () => {
         setIsPopupOpen(true); // Show the Popup
     };
-
 
     return (
         <>
@@ -38,6 +41,7 @@ const TrainPrediction: React.FC<TrainPredictionProps> = ({ latitude, longitude, 
                     click: handleMarkerClick,
                 }}
             >
+                {/* Render the TrainPredictionPopup component when the popup is open */}
                 {isPopupOpen && (
                     <TrainPredictionPopup 
                         id={id}
@@ -49,4 +53,4 @@ const TrainPrediction: React.FC<TrainPredictionProps> = ({ latitude, longitude, 
     );
 }
 
-export default TrainPrediction;
+export default TrainPrediction; // Export the TrainPrediction component

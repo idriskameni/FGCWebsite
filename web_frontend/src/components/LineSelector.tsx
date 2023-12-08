@@ -1,43 +1,16 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Checkbox, { checkboxClasses } from '@mui/material/Checkbox';
-import { PositionsEntry, RouteEntry } from '../types';
-import AppButton from './AppButton';
-
-
+// Define the props interface for LineSelector
 interface LineSelectorProps {
-    positions: PositionsEntry[];
-    routes: RouteEntry[];
-    selectedRoutes: string[];
-    setSelectedRoutes: React.Dispatch<React.SetStateAction<string[]>>;
+    positions: PositionsEntry[]; // The positions data
+    routes: RouteEntry[]; // The available routes
+    selectedRoutes: string[]; // The currently selected routes
+    setSelectedRoutes: React.Dispatch<React.SetStateAction<string[]>>; // Function to update selected routes
 }
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-        height: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-    },
-  },
-};
-
-
+// Define the LineSelector functional component
 const LineSelector: React.FC<LineSelectorProps> = ({ positions, routes, selectedRoutes, setSelectedRoutes }) => {
-
     // Create a Set of route IDs from positions
     const routeIdsFromPositions = new Set(positions.map(position => position.lin));
 
@@ -46,6 +19,7 @@ const LineSelector: React.FC<LineSelectorProps> = ({ positions, routes, selected
         route.route_type === 'Rail' && routeIdsFromPositions.has(route.route_id)
     );
 
+    // Function to handle the change event when selecting routes
     const handleChange = (event: SelectChangeEvent<typeof selectedRoutes>) => {
       const {
         target: { value },
@@ -59,13 +33,13 @@ const LineSelector: React.FC<LineSelectorProps> = ({ positions, routes, selected
     const isLoading = railRoutes.length === 0;
 
     const [open, setOpen] = React.useState(false);
-    const [age, setAge] = React.useState<number | string>('');
-
     
+    // Function to open the dialog for selecting lines
     const handleClickOpen = () => {
         setOpen(true);
     };
 
+    // Function to handle the close event of the dialog
     const handleClose = (event: React.SyntheticEvent<unknown>, reason?: string) => {
     if (reason !== 'backdropClick') {
         setOpen(false);
@@ -75,12 +49,28 @@ const LineSelector: React.FC<LineSelectorProps> = ({ positions, routes, selected
     return (
         <>
             <div>
-                <AppButton handleClickOpen={handleClickOpen}>SELECCIONA LES LÍNIES</AppButton>
+                {/* Button to open the dialog */}
+                <Button 
+                    onClick={handleClickOpen} // Set the click event handler
+                    sx={{ 
+                        m: 1, 
+                        width: 300, 
+                        height: 20, 
+                        fontSize: '12px',
+                        color: 'white',
+                        zIndex: 100,
+                        borderRadius: '4px',
+                    }}
+                >
+                    SELECCIONA LES LÍNIES {/* Display the button label */}
+                </Button>
+                {/* Dialog for selecting lines */}
                 <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
                     <DialogTitle>
                         Selecciona les línies del teu interès
                     </DialogTitle>
                     <DialogContent>
+                        {/* Form control for selecting lines */}
                         <FormControl sx={{ m: 1, width: 300, height: 35, z: 100 }}>
                             {isLoading ? (
                                 <div style={{color: '#282c34', textAlign: 'center', paddingTop: '5px'}}>
@@ -98,9 +88,10 @@ const LineSelector: React.FC<LineSelectorProps> = ({ positions, routes, selected
                                                 color: '#282c34'
                                             }
                                         }}
-                                        >
-                                            LÍNIES
+                                    >
+                                        LÍNIES
                                     </InputLabel>
+                                    {/* Select component for choosing lines */}
                                     <Select
                                         labelId="demo-multiple-checkbox-label"
                                         id="demo-multiple-checkbox"
@@ -136,6 +127,7 @@ const LineSelector: React.FC<LineSelectorProps> = ({ positions, routes, selected
                                     >
                                     {railRoutes.map((route) => (
                                         <MenuItem key={route.route_id} value={route.route_id} sx={{ color: '#282c34' }}>
+                                            {/* Checkbox for each line */}
                                             <Checkbox 
                                                 checked={selectedRoutes.indexOf(route.route_id) > -1} 
                                                 sx={{
@@ -152,6 +144,7 @@ const LineSelector: React.FC<LineSelectorProps> = ({ positions, routes, selected
                             )}
                         </FormControl>
                     </DialogContent>
+                    {/* Dialog actions */}
                     <DialogActions>
                         <Button onClick={handleClose}>Ok</Button>
                     </DialogActions>
@@ -159,7 +152,6 @@ const LineSelector: React.FC<LineSelectorProps> = ({ positions, routes, selected
             </div>
         </>
     );
-
 }
 
-export default LineSelector;
+export default LineSelector; // Export the LineSelector component
