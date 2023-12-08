@@ -9,8 +9,44 @@ from predictions_app.create_model import create_model
 from predictions_app.train_model import train_model
 from predictions_app.prepare_prediction_input import prepare_prediction_input
 
-
 def get_predictions(linia, dir, en_hora, id, minutes):
+    """
+    Perform predictions for the next location of a train based on historical data and machine learning.
+
+    Args:
+        linia (str): The train route ID for which to make predictions.
+        dir (int): The direction of the train (1 or 0).
+        en_hora (int): Indicates if the train is on time (1) or not (0).
+        id (str): The train ID for which to make predictions.
+        minutes (int): The number of minutes into the future to make predictions.
+
+    Returns:
+        dict: A dictionary containing the predicted location and timestamp.
+
+    This function performs predictions for the next location of a train based on historical data
+    and machine learning. It takes the train route ID, direction, on-time status, train ID, and
+    the number of minutes into the future to make predictions.
+
+    The function follows these steps:
+    1. Obtains a current epoch timestamp.
+    2. Retrieves a dictionary of classes representing possible locations.
+    3. Retrieves historical data for the train route.
+    4. Prepares the training data.
+    5. Creates or loads a machine learning model.
+    6. Trains the model using the training data.
+    7. Prepares the prediction input based on the provided parameters.
+    8. Makes a prediction for the next location.
+    9. Converts the predicted class back to latitude and longitude.
+    10. Returns a dictionary with the predicted location and timestamp.
+
+    Example:
+        To make predictions for train route 'S1' with direction 1, on-time status 1, train ID '123', and
+        predict 5 minutes into the future, call the function like this:
+        ```
+        result = get_predictions("S1", 1, 1, "123", 5)
+        print(result)
+        ```
+    """
 
     current_epoch = int(time.time())
     trip_id_encoder = LabelEncoder()
@@ -64,7 +100,6 @@ def get_predictions(linia, dir, en_hora, id, minutes):
     }
 
     return result
-
 
 if __name__ == "__main__":
     get_predictions("S1", 1, 5)

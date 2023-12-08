@@ -3,14 +3,26 @@ import numpy as np
 import requests
 from requests.exceptions import RequestException
 
-
 def get_classes(linia):
     """
-    Interpolates additional points along a line defined by a list of points.
+    Retrieve class numbers for geographical points along a specific route line (linia).
 
-    :param line_points: A list of (longitude, latitude) tuples.
-    :param num_extra_points: Number of extra points to generate between each pair of original points.
-    :return: A list of (longitude, latitude) tuples including the original and the interpolated points.
+    Args:
+        linia (str): The route ID (linia) for which to retrieve class numbers.
+
+    Returns:
+        dict: A dictionary that maps (longitude, latitude) tuples to unique class numbers.
+
+    This function queries an API for geographical data related to a specific route (linia) and interpolates
+    additional points along the route line. It assigns a unique class number to each point, which can be
+    used for classification or visualization purposes.
+
+    Example:
+        To retrieve class numbers for a route with ID '123', call the function like this:
+        ```
+        linia = '123'
+        class_numbers = get_classes(linia)
+        ```
     """
 
     num_extra_points = 1

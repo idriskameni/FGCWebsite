@@ -1,9 +1,26 @@
-import json
 import os
 import psycopg2
 
-
 def get_data(linia):
+    """
+    Retrieve data from the PostgreSQL database for a specific train route (linia).
+
+    Args:
+        linia (str): The ID of the train route for which to retrieve data.
+
+    Returns:
+        list: A list of tuples representing rows of data retrieved from the database.
+
+    This function reads a SQL query template from a file, formats it with the provided route ID (linia),
+    and executes the query against a PostgreSQL database. It returns the resulting data as a list of tuples.
+
+    Example:
+        To retrieve data for a train route with ID '123', call the function like this:
+        ```
+        linia = '123'
+        data = get_data(linia)
+        ```
+    """
 
     result = []
 
