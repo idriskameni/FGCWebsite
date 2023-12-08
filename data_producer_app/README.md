@@ -1,40 +1,18 @@
------
+# Data Producer App for Kafka and PostgreSQL Integration
 
-# ZOOKEEPER-KAFKA-SERVERS
+## Description
+This application fetches train position data and sends it to a specified Kafka topic. The data is then consumed and stored in a PostgreSQL database. It demonstrates the integration of Kafka for message streaming and PostgreSQL for data persistence.
 
------
+## Installation
 
-D:\kafka_2.13-3.6.0\bin\windows\zookeeper-server-start.bat D:\kafka_2.13-3.6.0\config\zookeeper.properties
------
-C:\kafka_2.12-3.6.0\bin\windows\zookeeper-server-start.bat C:\kafka_2.12-3.6.0\config\zookeeper.properties
------
-D:\kafka_2.13-3.6.0\bin\windows\kafka-server-start.bat  D:\kafka_2.13-3.6.0\config\server.properties
------
-C:\kafka_2.12-3.6.0\bin\windows\kafka-server-start.bat  C:\kafka_2.12-3.6.0\config\server.properties
+### Requirements
+- Python 3.x
+- Kafka Server
+- PostgreSQL Server
+- Edge browser (for cookie extraction)
 
------
+### Python Dependencies
+To install the required Python packages, run the following command:
 
-# DATA-PRODUCER-APP
-
------
-
-cd .\data_producer_app\
-python -m venv venv
-venv\Scripts\activate
-python -m pip install -r requirements.txt
-python main.py
-venv\Scripts\deactivate
-cd ..
-
------
-
-# CLEAN ZOOKEEPER/KAFKA
-
------
-
-https://stackoverflow.com/questions/51644409/kafka-broker-fails-because-all-log-dirs-have-failed
-
-rmdir /s /q C:\tmp\kafka-logs
-rmdir /s /q C:\tmp\zookeeper
-
------
+```bash
+pip install -r requirements.txt

@@ -36,7 +36,11 @@ def process_messages(consumer, connection, sql_query):
                 record = message.value
                 record['timestamp'] = message.timestamp
                 insert_into_db(record, cursor, sql_query)
-                connection.commit()  # Commit the transaction after successful insertion
+
+                # Commit the transaction after successful insertion
+                connection.commit()  
             except Exception as e:
                 print(f"Exception while inserting record into DB: {e}")
-                connection.rollback()  # Rollback the transaction in case of an exception
+
+                # Rollback the transaction in case of an exception
+                connection.rollback() 

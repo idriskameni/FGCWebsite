@@ -1,53 +1,35 @@
-from kafka import KafkaProducer
-import json
 import time
 import browser_cookie3
-import requests
-from datetime import datetime
+from kafka_producer import create_producer, send_messages
+from train_data_fetcher import get_train_positions
+from config import KAFKA_TOPIC
 
+def main():
+    """
+    Main function to continuously fetch and send train data to a Kafka topic.
 
-# Create Kafka producer
-producer = KafkaProducer(
-    bootstrap_servers=['localhost:9092'],
-    value_serializer=lambda m: json.dumps(m).encode('ascii')
-)
+    Retrieves cookies for domain authentication, initializes a Kafka producer, 
+    and enters an infinite loop to fetch train position data and send it to the 
+    specified Kafka topic at regular intervals.
 
-# Dictionary to keep track of the last positions for each train ID
-last_positions = {}
+    The process repeats every 15 seconds.
+    """
+    # Retrieve cookies for domain authentication
+    cookies = browser_cookie3.edge(domain_name='.opendatasoft.com')
 
+    # Initialize a Kafka producer
+    producer = create_producer()
 
-def get_train_positions(cookies):
-    url = "https://fgc.opendatasoft.com/api/explore/v2.1/catalog/datasets/posicionament-dels-trens/records?limit=100"
-    response = requests.get(url, cookies=cookies)
+    while True:
+        # Fetch train data from the data source
+        train_data = get_train_positions(cookies)
 
-    if response.status_code != 200:
-        return []
-    else:
-        response_data = response.json()
-        results = response_data.get('results', [])  # Ensure this matches the API's structure
+        # Send the fetched train data to the Kafka topic
+        send_messages(producer, KAFKA_TOPIC, train_data)
 
-        return results
+        # Wait for 15 seconds before the next data fetch
+        time.sleep(15)
 
-
-def produce_messages(cookies):
-
-    response = get_train_positions(cookies)
-
-    i = 0
-
-    for result in response:
-
-        producer.send('train-positions', value=result)
-        i+=1
-
-    producer.flush()  # Ensure all messages are sent
-
-    print(f'{i} messages sent to Kafka topic')
-    print('-------------------------------------------------')
-
-
-cookies = browser_cookie3.edge(domain_name='.opendatasoft.com')
-
-while True:
-    produce_messages(cookies)
-    time.sleep(15)  # Send a message every 5 seconds
+# Entry point for the script
+if __name__ == "__main__":
+    main()

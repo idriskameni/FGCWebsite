@@ -1,5 +1,5 @@
 from kafka_consumer import setup_consumer, process_messages
-from db_operations import setup_db_connection, close_db_connection
+from db_operations import setup_db_connection
 from utils.load_sql_query import load_sql_query
 
 def main():
