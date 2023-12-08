@@ -2,9 +2,13 @@ import browser_cookie3
 import requests
 from requests.exceptions import RequestException
 
-
 def get_routes():
+    """
+    Fetch train routes data from a remote API.
 
+    Returns:
+        list or None: A list of train route records if the request is successful, or None if there's an error.
+    """
     # Retrieve cookies
     cookies = browser_cookie3.edge(domain_name='.opendatasoft.com')
     cookie_dict = {c.name: c.value for c in cookies}
