@@ -1,10 +1,11 @@
-INSERT INTO input.train_positions
+INSERT INTO input.train_positions 
 (
     timestamp,
-    linia,
-    train_id,
-    latitude,
+    linia, 
+    trip_id, 
+    dir,
+    en_hora,
+    latitude, 
     longitude
 )
-VALUES ('{0}', '{1}', '{2}', {3}, {4})
-;
+VALUES (%s, %s, %s, %s, %s, %s, %s);

@@ -1,4 +1,2 @@
 kafka-python
 psycopg2
-requests
-datetime
