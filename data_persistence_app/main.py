@@ -19,7 +19,7 @@ def main():
         connection = setup_db_connection()
 
         # Load the SQL insertion query from a file
-        sql_query = load_sql_query('insert_query.sql')
+        sql_query = load_sql_query('queries/insert_train_positions.sql')
         
         # Process messages received from Kafka
         process_messages(consumer, connection, sql_query)

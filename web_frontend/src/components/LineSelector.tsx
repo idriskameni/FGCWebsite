@@ -1,5 +1,20 @@
 import React from 'react';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
+import ListItemText from '@mui/material/ListItemText';
+import { checkboxClasses } from '@mui/material/Checkbox';
+
+import { PositionsEntry, RouteEntry } from '../types';
+
 
 // Define the props interface for LineSelector
 interface LineSelectorProps {
@@ -102,7 +117,6 @@ const LineSelector: React.FC<LineSelectorProps> = ({ positions, routes, selected
                                         renderValue={(selected) => 
                                             selected.map(id => routes.find(route => route.route_id === id)?.route_short_name).join(', ')
                                         }
-                                        MenuProps={MenuProps}
                                         // Custom style for underline
                                         sx={{
                                             height: 35,

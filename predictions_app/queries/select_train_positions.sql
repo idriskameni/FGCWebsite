@@ -7,4 +7,5 @@
 FROM input.train_positions
 WHERE linia = '{0}'
 ORDER BY "timestamp" DESC
+LIMIT 1000
 ;

@@ -27,8 +27,8 @@ def main():
         # Send the fetched train data to the Kafka topic
         send_messages(producer, KAFKA_TOPIC, train_data)
 
-        # Wait for 15 seconds before the next data fetch
-        time.sleep(15)
+        # Wait for 10 seconds before the next data fetch
+        time.sleep(10)
 
 # Entry point for the script
 if __name__ == "__main__":
