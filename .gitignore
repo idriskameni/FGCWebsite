@@ -3,20 +3,19 @@ data_producer_app/venv
 predictions_app/venv
 web_backend/venv
 
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+data_persistence_app/__pycache__
+data_producer_app/__pycache__
+predictions_app/__pycache__
+web_backend/__pycache__
 
-# dependencies
 web_frontend/node_modules
 web_frontend/.pnp
 web_frontend/.pnp.js
 
-# testing
 web_frontend/coverage
 
-# production
 web_frontend/build
 
-# misc
 web_frontend/.DS_Store
 web_frontend/.env.local
 web_frontend/.env.development.local
